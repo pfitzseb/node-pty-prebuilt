@@ -1,9 +1,7 @@
 {
-  "name": "node-pty-prebuilt",
+  "name": "@pfitzseb/node-pty-prebuilt",
   "description": "Fork pseudoterminals in Node.JS",
-  "author": {
-    "name": "Microsoft Corporation"
-  },
+  "author": "Microsoft Corporation",
   "version": "0.8.1",
   "license": "MIT",
   "main": "./lib/index.js",
@@ -57,5 +55,9 @@
     "tslint": "^5.12.1",
     "tslint-consistent-codestyle": "^1.15.0",
     "typescript": "3.4"
+  },
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
   }
 }
