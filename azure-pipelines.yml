@@ -40,33 +40,33 @@ jobs:
     displayName: 'Prebuild and publish'
 - job: macOSNode
   pool:
-    vmImage: 'macOS-10.14'
+    vmImage: 'xcode9-macos10.13'
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '10.x'
+      versionSpec: '8.x'
     displayName: 'Install Node.js'
   - script: |
       npm i
     displayName: 'Install dependencies and build'
   - script: |
-      npx prebuild -t 5.0.0 -t 6.0.0 -t 7.0.0 -t 8.0.0 -t 10.0.0 -t 11.0.0 -t 12.0.0 -u $GITHUB_RELEASE_TOKEN
+      npx prebuild --all -u $GITHUB_RELEASE_TOKEN
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
 - job: macOSElectron
   pool:
-    vmImage: 'macOS-10.14'
+    vmImage: 'xcode9-macos10.13'
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '10.x'
+      versionSpec: '8.x'
     displayName: 'Install Node.js'
   - script: |
       npm i
     displayName: 'Install dependencies and build'
   - script: |
-      npx prebuild -t 3.0.0 -t 4.0.0 -t 4.0.4 -t 5.0.0 -r electron -u $GITHUB_RELEASE_TOKEN
+      npx prebuild --all -r electron -u $GITHUB_RELEASE_TOKEN
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
