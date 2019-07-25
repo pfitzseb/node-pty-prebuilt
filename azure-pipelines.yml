@@ -22,7 +22,7 @@ jobs:
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
-- job: macOS (Node)
+- job: macOSNode
   pool:
     vmImage: 'xcode9-macos10.13'
   steps:
@@ -38,7 +38,7 @@ jobs:
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
-- job: macOS (Electron)
+- job: macOSElectron
   pool:
     vmImage: 'xcode9-macos10.13'
   steps:
@@ -54,7 +54,7 @@ jobs:
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
-- job: Windows (Node)
+- job: WindowsNode
   pool:
     vmImage: 'vs2017-win2016'
   steps:
@@ -79,7 +79,7 @@ jobs:
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
-- job: Windows (Electron)
+- job: WindowsElectron
   pool:
     vmImage: 'vs2017-win2016'
   steps:
