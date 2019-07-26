@@ -38,7 +38,7 @@ jobs:
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
-- job: macOSNode
+- job: macOS
   pool:
     vmImage: 'xcode9-macos10.13'
   steps:
@@ -54,7 +54,7 @@ jobs:
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
-- job: WindowsNode
+- job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
@@ -74,11 +74,11 @@ jobs:
       node-gyp configure --msvs_version=2017
     displayName: 'Set msvs_version'
   - script: |
-      npx prebuild -t 3.0.0 -t 4.0.0 -t 4.0.4 -t 5.0.0 -r electron --include-regex "\.(node|exe|dll|pdb)$" -u %GITHUB_RELEASE_TOKEN%
+      npx prebuild -t 3.0.0 -t 4.0.0 -t 4.0.4 -r electron --include-regex "\.(node|exe|dll|pdb)$" -u %GITHUB_RELEASE_TOKEN%
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
-- job: WindowsElectron
+- job: Windows32
   pool:
     vmImage: 'vs2017-win2016'
   steps:
@@ -98,7 +98,7 @@ jobs:
       node-gyp configure --msvs_version=2017
     displayName: 'Set msvs_version'
   - script: |
-      npx prebuild -t 3.0.0 -t 4.0.0 -t 4.0.4 -t 5.0.0 -r electron -a ia32 --include-regex "\.(node|exe|dll|pdb)$" -u %GITHUB_RELEASE_TOKEN%
+      npx prebuild -t 3.0.0 -t 4.0.0 -t 4.0.4 -r electron -a ia32 --include-regex "\.(node|exe|dll|pdb)$" -u %GITHUB_RELEASE_TOKEN%
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
