@@ -10,48 +10,95 @@ jobs:
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '8.x'
+      versionSpec: '10.x'
     displayName: 'Install Node.js'
   - script: |
+      sudo apt-get -qq install g++-multilib
       npm i
     displayName: 'Install dependencies and build'
   - script: |
-      npm test
-    displayName: 'Test'
+      npx prebuild --all -u $GITHUB_RELEASE_TOKEN
+    env:
+      GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
+    displayName: 'Prebuild and publish'
+- job: LinuxIA32
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
   - script: |
-      npm run lint
-    displayName: 'Lint'
-- job: macOS
+      sudo apt-get -qq install g++-multilib
+      npm i
+    displayName: 'Install dependencies and build'
+  - script: |
+      npx prebuild --all -a ia32 -u $GITHUB_RELEASE_TOKEN
+    env:
+      GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
+    displayName: 'Prebuild and publish'
+- job: macOSNode
   pool:
     vmImage: 'xcode9-macos10.13'
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '8.x'
+      versionSpec: '10.x'
     displayName: 'Install Node.js'
   - script: |
       npm i
     displayName: 'Install dependencies and build'
   - script: |
-      npm test
-    displayName: 'Test'
-  - script: |
-      npm run lint
-    displayName: 'Lint'
-- job: Windows
+      npx prebuild --all -u $GITHUB_RELEASE_TOKEN
+    env:
+      GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
+    displayName: 'Prebuild and publish'
+- job: WindowsNode
   pool:
     vmImage: 'vs2017-win2016'
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '8.x'
+      versionSpec: '10.x'
     displayName: 'Install Node.js'
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '2.7'
+      architecture: 'x64'
   - script: |
       npm i
     displayName: 'Install dependencies and build'
   - script: |
-      npm test
-    displayName: 'Test'
+      npm config set msvs_version 2017
+      node-gyp configure --msvs_version=2017
+    displayName: 'Set msvs_version'
   - script: |
-      npm run lint
-    displayName: 'Lint'
+      npx prebuild --all --include-regex "\.(node|exe|dll|pdb)$" -u %GITHUB_RELEASE_TOKEN%
+    env:
+      GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
+    displayName: 'Prebuild and publish'
+- job: WindowsElectron
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '2.7'
+      architecture: 'x64'
+  - script: |
+      npm i
+    displayName: 'Install dependencies and build'
+  - script: |
+      npm config set msvs_version 2017
+      node-gyp configure --msvs_version=2017
+    displayName: 'Set msvs_version'
+  - script: |
+      npx prebuild --all -a ia32 --include-regex "\.(node|exe|dll|pdb)$" -u %GITHUB_RELEASE_TOKEN%
+    env:
+      GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
+    displayName: 'Prebuild and publish'
