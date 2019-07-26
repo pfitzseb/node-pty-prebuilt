@@ -66,7 +66,7 @@ jobs:
       npm i
     displayName: 'Install dependencies and build'
   - script: |
-      npx prebuild -t 3.0.0 -t 4.0.0 -t 4.0.4 -t 5.0.0 -r electron -u $GITHUB_RELEASE_TOKEN
+      npx prebuild -t 4.0.0 -t 4.0.4 -t 5.0.0 -r electron -u $GITHUB_RELEASE_TOKEN
     env:
       GITHUB_RELEASE_TOKEN: $(GITHUB_RELEASE_TOKEN)
     displayName: 'Prebuild and publish'
